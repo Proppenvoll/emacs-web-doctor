@@ -1,0 +1,25 @@
+services:
+  emacs-web-doctor-frontend:
+    build:
+      target: frontend-base
+    image: localhost/emacs-web-doctor-frontend
+    tty: true
+    network_mode: host
+    volumes:
+      - ./frontend:/emacs-web-doctor-frontend
+    container_name: emacs-web-doctor-frontend
+    environment:
+      - PUBLIC_API_BASE_URL=http://localhost:${BACKEND_PORT}
+
+  emacs-web-doctor-backend:
+    build:
+      target: backend-base
+    image: localhost/emacs-web-doctor-backend
+    tty: true
+    network_mode: host
+    volumes:
+      - ./backend:/emacs-web-doctor-backend
+    container_name: emacs-web-doctor-backend
+    environment:
+      - CORS_ACTIVE=yes
+      - PORT=${BACKEND_PORT}
